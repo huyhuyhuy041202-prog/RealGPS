@@ -9,12 +9,12 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Compile ARM64 Dylib
+- name: Compile ARM64 Dylib
         run: |
           clang -dynamiclib -arch arm64 -fobjc-arc \
             -isysroot $(xcrun --sdk iphoneos --show-sdk-path) \
             -miphoneos-version-min=15.0 \
-            -framework Foundation -framework CoreLocation -framework UIKit \
+            -framework Foundation -framework CoreLocation -framework UIKit -framework CoreGraphics -framework QuartzCore \
             FakeGPS.m -o FakeGPS.dylib
       - name: Upload Dylib
         uses: actions/upload-artifact@v4
