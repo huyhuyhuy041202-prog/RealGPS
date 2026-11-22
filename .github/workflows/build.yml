@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-- name: Compile ARM64 Dylib
+      - name: Compile ARM64 Dylib
         run: |
           clang -dynamiclib -arch arm64 -fobjc-arc \
             -isysroot $(xcrun --sdk iphoneos --show-sdk-path) \
