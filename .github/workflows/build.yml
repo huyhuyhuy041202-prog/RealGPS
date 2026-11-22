@@ -1,0 +1,30 @@
+name: Build FakeGPS Dylib
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile ARM64 Dylib
+        run: |
+          clang -dynamiclib -arch arm64 \
+            -isysroot $(xcrun --sdk iphoneos --show-sdk-path) \
+            -miphoneos-version-min=15.0 \
+            -framework Foundation -framework CoreLocation \
+            FakeGPS.m -o FakeGPS.dylib
+      - name: Upload Dylib
+        uses: actions/upload-artifact@v4
+        with:
+          name: FakeGPS-dylib
+          path: FakeGPS.dylib
+          - name: Compile ARM64 Dylib
+        run: |
+          clang -dynamiclib -arch arm64 -fobjc-arc \
+            -isysroot $(xcrun --sdk iphoneos --show-sdk-path) \
+            -miphoneos-version-min=15.0 \
+            -framework Foundation -framework CoreLocation -framework UIKit \
+            FakeGPS.m -o FakeGPS.dylib
